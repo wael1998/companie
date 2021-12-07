@@ -1,15 +1,15 @@
 import { Fragment } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
+import SignInSide from "./components/Login/Login";
+import Register from "./components/Register/Register";
 function App() {
   return (
     <>
       <Router>
         <Fragment>
           <Routes>
-            <Route path="/todo" component={Todo} />
-            <Route path="/register" component={Register} />
-            <Route path="/login" component={Login} />
+            <Route path="/login" element={<SignInSide />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </Fragment>
       </Router>
