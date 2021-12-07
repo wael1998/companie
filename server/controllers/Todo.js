@@ -17,6 +17,7 @@ const createTodo = async (req, res) => {
   newTodo.title = req.body.title;
   newTodo.description = req.body.description;
   newTodo.deadline = req.body.deadline;
+  console.log(newTodo.title);
   try {
     await newTodo.save();
     res.status(200).json(newTodo);
