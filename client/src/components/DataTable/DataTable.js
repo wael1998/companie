@@ -21,7 +21,7 @@ import {
   ArrowDownward,
   AddBox,
 } from "@material-ui/icons";
-
+import Header from "../Header/Header";
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
   Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
@@ -46,7 +46,7 @@ const tableIcons = {
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
 };
 
-const DataTable = () => {
+const DataTable = ({ user }) => {
   const [data, setData] = useState();
   const columns = [
     {
@@ -62,7 +62,6 @@ const DataTable = () => {
       field: "date",
     },
   ];
-
   useEffect(() => {
     getData();
   }, []);
@@ -71,10 +70,11 @@ const DataTable = () => {
     window.location.reload();
   }
 
-  const getData = async () =>
+  const getData = async () => {
     await getTodos.then((response) => {
       setData(response);
     });
+  };
 
   const deleteTask = async (id) => {
     await deleteTodo(id).then((response) => console.log(response));
@@ -82,8 +82,10 @@ const DataTable = () => {
   };
 
   const addTask = async (todo) => {
-    await addTodo(todo);
-    refreshPage();
+    if (localStorage.getItem("token")) {
+      await addTodo(todo);
+      refreshPage();
+    } else return false;
   };
 
   const updateTask = async (id, updated) => {
@@ -93,44 +95,47 @@ const DataTable = () => {
   };
 
   return (
-    <div className="tablediv">
-      <h1 className="tabletitle">Task List</h1>
-      <div>
-        <MaterialTable
-          icons={tableIcons}
-          title="Tasks List"
-          data={data}
-          columns={columns}
-          editable={{
-            onRowAdd: (newRow) =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  addTask(newRow);
+    <>
+      <Header />
+      <div className="tablediv">
+        <h1 className="tabletitle">Task List</h1>
+        <div>
+          <MaterialTable
+            icons={tableIcons}
+            title="Tasks List"
+            data={data}
+            columns={columns}
+            editable={{
+              onRowAdd: (newRow) =>
+                new Promise((resolve, reject) => {
+                  setTimeout(() => {
+                    addTask(newRow);
+                    resolve();
+                  }, 2000);
+                }),
+              onRowDelete: (selectedRow) =>
+                new Promise((resolve, reject) => {
+                  deleteTask(selectedRow._id);
                   resolve();
-                }, 2000);
-              }),
-            onRowDelete: (selectedRow) =>
-              new Promise((resolve, reject) => {
-                deleteTask(selectedRow._id);
-                resolve();
-              }),
-            onRowUpdate: (updatedRow, oldRow) =>
-              new Promise((resolve, reject) => {
-                updateTask(updatedRow._id, updatedRow);
-                resolve();
-              }),
-          }}
-          options={{
-            actionsColumnIndex: -1,
-            exportButton: true,
-          }}
-        />
+                }),
+              onRowUpdate: (updatedRow, oldRow) =>
+                new Promise((resolve, reject) => {
+                  updateTask(updatedRow._id, updatedRow);
+                  resolve();
+                }),
+            }}
+            options={{
+              actionsColumnIndex: -1,
+              exportButton: true,
+            }}
+          />
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
       </div>
-      <br />
-      <br />
-      <br />
-      <br />
-    </div>
+    </>
   );
 };
 

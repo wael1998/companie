@@ -15,6 +15,8 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { login } from "../../services/user";
+import { useNavigate } from "react-router-dom";
+
 function Copyright(props) {
   return (
     <Typography
@@ -36,7 +38,11 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInSide() {
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
+
+  const [user, setUser] = React.useState();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
@@ -44,8 +50,19 @@ export default function SignInSide() {
       email: data.get("email"),
       password: data.get("password"),
     });
-    login({ email: data.get("email"), password: data.get("password") });
+    login({
+      email: data.get("email"),
+      password: data.get("password"),
+    }).then((res) => {
+      setUser(res.data);
+    });
   };
+  React.useEffect(() => {
+    if (user) {
+      navigate("/todo", user);
+    }
+  }, [user]);
+
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>

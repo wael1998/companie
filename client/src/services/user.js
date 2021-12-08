@@ -11,14 +11,19 @@ function register(user) {
     });
 }
 
-function login(user) {
-  axios
+const login = (user) => {
+  const response = axios
     .post(`${uri}/login`, user)
-    .then((response) => response.data)
+    .then((response) => {
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("email", response.data.user.email);
+      return response;
+    })
     .catch((error) => {
       console.debug(error);
     });
-}
+  return response;
+};
 
 module.exports = {
   login,
