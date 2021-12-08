@@ -12,10 +12,21 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
+
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { login } from "../../services/user";
 import { useNavigate } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+
+toast.configure();
+const DescriptionItem = ({ title, content }) => (
+  <div className="site-description-item-profile-wrapper">
+    <p className="site-description-item-profile-p-label">{title}:</p>
+    {content}
+  </div>
+);
 
 function Copyright(props) {
   return (
@@ -27,7 +38,7 @@ function Copyright(props) {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Coliveri
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -46,15 +57,15 @@ export default function SignInSide() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+
     login({
       email: data.get("email"),
       password: data.get("password"),
     }).then((res) => {
-      setUser(res.data);
+      if (res) {
+        setUser(res.data);
+        toast.success("You are logged in. Have Fun :)");
+      } else toast.error("Email or password wrong ! ");
     });
   };
   React.useEffect(() => {
@@ -138,13 +149,8 @@ export default function SignInSide() {
                 Sign In
               </Button>
               <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/register" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

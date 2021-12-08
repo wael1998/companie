@@ -3,12 +3,15 @@ const axios = require("axios");
 const uri = "http://localhost:4000/user";
 
 function register(user) {
-  axios
+  const response = axios
     .post(`${uri}/register`, user)
-    .then((response) => response.data)
+    .then((response) => {
+      return response.data;
+    })
     .catch((error) => {
       console.debug(error);
     });
+  return response;
 }
 
 const login = (user) => {
