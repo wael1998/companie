@@ -28,6 +28,7 @@ const updateTodo = (id, newTodo) =>
   axios
     .patch(`${uri}/${id}`, newTodo)
     .then((response) => console.log(response));
+
 module.exports = {
   getTodos,
   addTodo,

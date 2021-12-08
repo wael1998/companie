@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
+import { login } from "../../services/user";
 function Copyright(props) {
   return (
     <Typography
@@ -44,6 +44,7 @@ export default function SignInSide() {
       email: data.get("email"),
       password: data.get("password"),
     });
+    login({ email: data.get("email"), password: data.get("password") });
   };
   return (
     <ThemeProvider theme={theme}>
