@@ -12,7 +12,7 @@ function App() {
       <Router>
         <Fragment>
           <Routes>
-            <Route exact path="/login" element={<SignInSide />} />
+            <Route exact path="/" element={<SignInSide />} />
             <Route exact path="/register" element={<Register />} />
             <Route exact path="/todo" element={<DataTable />} />
           </Routes>

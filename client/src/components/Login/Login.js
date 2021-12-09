@@ -21,12 +21,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 
 toast.configure();
-const DescriptionItem = ({ title, content }) => (
-  <div className="site-description-item-profile-wrapper">
-    <p className="site-description-item-profile-p-label">{title}:</p>
-    {content}
-  </div>
-);
 
 function Copyright(props) {
   return (
@@ -72,7 +66,7 @@ export default function SignInSide() {
     if (user) {
       navigate("/todo", user);
     }
-  }, [user]);
+  });
 
   return (
     <ThemeProvider theme={theme}>

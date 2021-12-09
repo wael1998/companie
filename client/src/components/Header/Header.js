@@ -13,10 +13,10 @@ const Header = ({ user }) => {
   const [auth, setAuth] = useState(true);
   React.useEffect(() => {
     if (!localStorage.getItem("email")) {
-      navigate("/login");
+      navigate("/");
       window.location.reload();
     }
-  }, []);
+  });
   const handleLogout = () => {
     localStorage.removeItem("email");
     localStorage.removeItem("token");

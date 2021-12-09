@@ -14,6 +14,10 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import { register } from "../../services/user";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+
+toast.configure();
 
 function Copyright(props) {
   return (
@@ -44,7 +48,11 @@ export default function SignUp() {
     register({
       email: data.get("email"),
       password: data.get("password"),
-    }).then((res) => console.log(res));
+    }).then((res) => {
+      if (res) {
+        toast.success("Registered successfully, Welcome !");
+      } else toast.error("Email already in use ! ");
+    });
   };
 
   return (
@@ -104,7 +112,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/login" variant="body2">
+                <Link href="/" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
