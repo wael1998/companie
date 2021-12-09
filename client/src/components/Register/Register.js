@@ -16,6 +16,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { register } from "../../services/user";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 toast.configure();
 
@@ -40,6 +41,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -51,6 +53,7 @@ export default function SignUp() {
     }).then((res) => {
       if (res) {
         toast.success("Registered successfully, Welcome !");
+        navigate("/");
       } else toast.error("Email already in use ! ");
     });
   };

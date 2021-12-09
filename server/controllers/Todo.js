@@ -1,5 +1,6 @@
 var Todo = require("../models/todo");
 const mongoose = require("mongoose");
+const { body, validationResult } = require("express-validator");
 
 const getTodo = async (req, res) => {
   try {
@@ -17,12 +18,16 @@ const createTodo = async (req, res) => {
   newTodo.title = req.body.title;
   newTodo.description = req.body.description;
   newTodo.deadline = req.body.deadline;
-  console.log(newTodo.title);
-  try {
-    await newTodo.save();
-    res.status(200).json(newTodo);
-  } catch (err) {
-    console.log(err);
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  } else {
+    try {
+      await newTodo.save();
+      return res.status(200).json(newTodo);
+    } catch (err) {
+      console.log(err);
+    }
   }
 };
 

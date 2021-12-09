@@ -22,6 +22,10 @@ import {
   AddBox,
 } from "@material-ui/icons";
 import Header from "../Header/Header";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+
+toast.configure();
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
   Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
@@ -58,8 +62,9 @@ const DataTable = ({ user }) => {
       field: "description",
     },
     {
-      title: "Date",
-      field: "date",
+      title: "Deadline",
+      field: "deadline",
+      type: "date",
     },
   ];
   useEffect(() => {
@@ -83,8 +88,15 @@ const DataTable = ({ user }) => {
 
   const addTask = async (todo) => {
     if (localStorage.getItem("token")) {
-      await addTodo(todo);
-      refreshPage();
+      const a = await addTodo(todo).then((res) => {
+        if (res) {
+          toast.success("Task added successfully");
+          refreshPage();
+        } else toast.error("Title is required (3)");
+      });
+      console.log("====================================");
+      console.log(a);
+      console.log("====================================");
     } else return false;
   };
 

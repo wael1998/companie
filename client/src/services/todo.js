@@ -11,14 +11,19 @@ const getTodos = axios
   });
 
 function addTodo(todo) {
-  axios
+  const response = axios
     .post(`${uri}/add`, todo)
-    .then((response) => response.data)
+    .then((res) => {
+      if (res) {
+        return true;
+      } else return false;
+    })
     .catch((error) => {
       if (error.response && error.response.status === 404) {
         return `\u2014`;
       }
     });
+  return response;
 }
 
 const deleteTodo = (id) =>

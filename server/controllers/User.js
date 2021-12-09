@@ -67,15 +67,35 @@ const login = async (req, res) => {
 };
 
 const register = async (req, res) => {
-  const salt = await bcrypt.genSalt(10);
-  var user = new User();
-  user.email = req.body.email;
-  user.password = await bcrypt.hash(req.body.password, salt);
+  check("email", "Please include a valid email").isEmail();
+  check("password", "Password is required").exists();
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  const { email, password } = req.body;
   try {
-    await user.save();
-    res.send("user added");
+    let existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ errors: [{ msg: "Email already used !" }] });
+    } else {
+      const salt = await bcrypt.genSalt(10);
+      var user = new User();
+      user.email = req.body.email;
+      user.password = await bcrypt.hash(req.body.password, salt);
+      try {
+        await user.save();
+        res.send("user added");
+      } catch (err) {
+        console.log(err);
+      }
+    }
   } catch (err) {
-    console.log(err);
+    res.status(500).send("Server error");
   }
 };
 
