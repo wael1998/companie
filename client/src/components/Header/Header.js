@@ -6,28 +6,29 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Logout from "@mui/icons-material/Logout";
+import Login from "@mui/icons-material/Login";
 import { useNavigate } from "react-router-dom";
 
-const Header = ({ user }) => {
+const Header = () => {
   const navigate = useNavigate();
   const [auth, setAuth] = useState(true);
-  React.useEffect(() => {
-    if (!localStorage.getItem("email")) {
-      navigate("/");
-      window.location.reload();
-    }
-  });
+
   const handleLogout = () => {
     localStorage.removeItem("email");
     localStorage.removeItem("token");
+    navigate("/");
+    window.location.reload();
+  };
+  const handleLogin = () => {
+    navigate("/");
     window.location.reload();
   };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (!token) {
-      setAuth(false);
-    } else setAuth(true);
+    if (token) {
+      setAuth(true);
+    } else setAuth(false);
   }, []);
 
   return (
@@ -46,7 +47,7 @@ const Header = ({ user }) => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Coliveri
           </Typography>
-          {auth && (
+          {auth ? (
             <div
               style={{
                 display: "flex",
@@ -54,10 +55,6 @@ const Header = ({ user }) => {
                 alignItems: "center",
               }}
             >
-              <h6>
-                {localStorage.getItem("email") &&
-                  `hello, ${localStorage.getItem("email")}`}
-              </h6>
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -69,6 +66,18 @@ const Header = ({ user }) => {
                 <Logout />
               </IconButton>
             </div>
+          ) : (
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              color="inherit"
+              onClick={handleLogin}
+            >
+              Login
+              <Login />
+            </IconButton>
           )}
         </Toolbar>
       </AppBar>
