@@ -50,10 +50,8 @@ const login = async (req, res) => {
       (err, token) => {
         if (err) throw err;
         res.json({ token, user });
-        User.updateOne(
-          { _id: payload.user.id },
-          { $push: { loginDates: Date.now() } }
-        ).exec();
+        res.sendStatus(200)
+        
       }
     );
   } catch (err) {

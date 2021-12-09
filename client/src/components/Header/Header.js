@@ -18,6 +18,12 @@ const Header = () => {
     navigate("/");
     window.location.reload();
   };
+  useEffect(() => {
+    if (!auth) {
+      navigate("/");
+      window.location.reload();
+    }
+  });
   const handleLogin = () => {
     navigate("/");
     window.location.reload();
