@@ -8,7 +8,6 @@ const getUser = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
     res.json(user);
-    console.log(user);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
@@ -25,11 +24,8 @@ const login = async (req, res) => {
   }
 
   const { email, password } = req.body;
-  console.log(email + password);
   try {
     let user = await User.findOne({ email });
-    console.log(user);
-
     if (!user) {
       return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
     }
@@ -91,7 +87,7 @@ const register = async (req, res) => {
         await user.save();
         res.send("user added");
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     }
   } catch (err) {

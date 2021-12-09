@@ -5,8 +5,6 @@ const { body, validationResult } = require("express-validator");
 const getTodo = async (req, res) => {
   try {
     const allTodos = await Todo.find();
-
-    console.log(allTodos);
     res.status(200).json(allTodos);
   } catch (error) {
     res.status(404).json({ message: error.message() });
@@ -26,7 +24,7 @@ const createTodo = async (req, res) => {
       await newTodo.save();
       return res.status(200).json(newTodo);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }
 };

@@ -26,13 +26,9 @@ function addTodo(todo) {
   return response;
 }
 
-const deleteTodo = (id) =>
-  axios.delete(`${uri}/${id}`).then((rsponse) => console.log(rsponse));
+const deleteTodo = (id) => axios.delete(`${uri}/${id}`);
 
-const updateTodo = (id, newTodo) =>
-  axios
-    .patch(`${uri}/${id}`, newTodo)
-    .then((response) => console.log(response));
+const updateTodo = (id, newTodo) => axios.patch(`${uri}/${id}`, newTodo);
 
 module.exports = {
   getTodos,

@@ -82,26 +82,22 @@ const DataTable = ({ user }) => {
   };
 
   const deleteTask = async (id) => {
-    await deleteTodo(id).then((response) => console.log(response));
+    await deleteTodo(id);
     refreshPage();
   };
 
   const addTask = async (todo) => {
     if (localStorage.getItem("token")) {
-      const a = await addTodo(todo).then((res) => {
+      await addTodo(todo).then((res) => {
         if (res) {
           toast.success("Task added successfully");
           refreshPage();
         } else toast.error("Title is required (3)");
       });
-      console.log("====================================");
-      console.log(a);
-      console.log("====================================");
     } else return false;
   };
 
   const updateTask = async (id, updated) => {
-    console.log(id);
     await updateTodo(id, updated);
     refreshPage();
   };
