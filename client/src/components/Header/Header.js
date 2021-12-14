@@ -8,10 +8,39 @@ import Logout from "@mui/icons-material/Logout";
 import Login from "@mui/icons-material/Login";
 import { useNavigate } from "react-router-dom";
 
+import {
+ 
+  CssBaseline,
+  makeStyles,
+} from "@material-ui/core";
+import { Link } from "react-router-dom";
+
+const useStyles = makeStyles((theme) => ({
+  navlinks: {
+    marginLeft: theme.spacing(10),
+    display: "flex",
+  },
+ logo: {
+    flexGrow: "1",
+    cursor: "pointer",
+  },
+  link: {
+    textDecoration: "none",
+    color: "white",
+    fontSize: "20px",
+    marginLeft: theme.spacing(20),
+    "&:hover": {
+      color: "yellow",
+      borderBottom: "1px solid white",
+    },
+  },
+}));
+
+
 const Header = () => {
   const navigate = useNavigate();
   const [auth, setAuth] = useState(true);
-
+  const classes = useStyles();
   const handleLogout = () => {
     localStorage.removeItem("email");
     localStorage.removeItem("token");
@@ -39,10 +68,35 @@ const Header = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
+      <CssBaseline />
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Coliveri
+           Tunisaire
           </Typography>
+              <div className={classes.navlinks}>
+                <Link to="/todo" className={classes.link}>
+                 Reserver
+                </Link>
+                <Link to="/passager" className={classes.link}>
+                  Passager
+                </Link>
+                <Link to="/employer" className={classes.link}>
+                  Employer
+                </Link>
+                <Link to="/vol" className={classes.link}>
+                  vol
+                </Link>
+                <Link to="/avion" className={classes.link}>
+                  avion
+                </Link><Link to="/pilote" className={classes.link}>
+                  pilote
+                </Link>
+                <Link to="/ddd" className={classes.link}>
+                    
+                </Link>
+                </div>
+
+          
           {auth ? (
             <div
               style={{

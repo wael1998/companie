@@ -42,7 +42,7 @@ export default function StickyFooter() {
       >
         <Container maxWidth="sm">
           <Typography variant="body1">
-            Coliveri by Mehdi Hrairi &#128519;
+            tunisaire &#128519;
           </Typography>
           <Copyright />
         </Container>

@@ -137,7 +137,7 @@ const DataTable = ({ user }) => {
               exportButton: true,
             }}
           />
-        </div>
+          </div> 
         <br />
         <br />
         <br />

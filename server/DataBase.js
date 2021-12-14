@@ -8,7 +8,7 @@ module.exports = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     };
-    await mongoose.connect(process.env.DATABASE_URL, connectionParams);
+    await mongoose.connect("mongodb+srv://wael:0000@cluster0.k3wgl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", connectionParams);
     console.log("Connected to DataBase");
   } catch (error) {
     console.log("Could not connect to DataBase. ", error);
